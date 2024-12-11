@@ -4,10 +4,16 @@ import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.NoSuchElementException;
+
+import piece.King;
+import piece.Pawn;
+import piece.Piece;
 
 /**
  * Chess Board Class defining a chess board as a 8x8 board each space only knows
@@ -22,6 +28,24 @@ public class Board {
         map = new HashMap<>();
         map.put(Space.E1, new King("White"));
         map.put(Space.E8, new King("Black"));
+
+        map.put(Space.A2, new Pawn("White"));
+        map.put(Space.B2, new Pawn("White"));
+        map.put(Space.C2, new Pawn("White"));
+        map.put(Space.D2, new Pawn("White"));
+        map.put(Space.E2, new Pawn("White"));
+        map.put(Space.F2, new Pawn("White"));
+        map.put(Space.G2, new Pawn("White"));
+        map.put(Space.H2, new Pawn("White"));
+
+        map.put(Space.A7, new Pawn("Black"));
+        map.put(Space.B7, new Pawn("Black"));
+        map.put(Space.C7, new Pawn("Black"));
+        map.put(Space.D7, new Pawn("Black"));
+        map.put(Space.E7, new Pawn("Black"));
+        map.put(Space.F7, new Pawn("Black"));
+        map.put(Space.G7, new Pawn("Black"));
+        map.put(Space.H7, new Pawn("Black"));
     }
 
     /**
@@ -44,18 +68,20 @@ public class Board {
         Iterator<Piece> pIterator = new PieceIterator(map);
         LocalDateTime now = LocalDateTime.now();
         o.printf("%s\n", now.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-        o.print("---".repeat(7) + "-\n");
-        for (int i = 0; i < 64; i++) {
-            Piece currPiece = pIterator.next();
-            if (currPiece == null) {
-                o.print("|  ");
-            } else {
-                o.printf("|%s ", currPiece.toString());
-            }
-            if ((i + 1) % 8 == 0) {
-                o.print("\n" + "---".repeat(7) + "-\n");
-            }
+        o.print("----".repeat(8) + "-\n");
+        for (int i = 0; i < 8; i++) {
+            String line = "|";
+            for (int j = 0; j < 8; j++) {
+                Piece curr = pIterator.next();
+                if (curr == null) {
+                    line = "|   " + line;
+                } else {
+                    line = String.format("| %s ", curr.toString()) + line;
+                }
 
+            }
+            o.print(line + "\n");
+            o.print("----".repeat(8) + "-\n");
         }
 
     }
@@ -141,7 +167,7 @@ public class Board {
             this.number = number;
         }
 
-        protected static Space getSpace(int letter, int number) {
+        public static Space getSpace(int letter, int number) {
             for (Space space : Space.values()) {
                 if (space.getLetter() == letter && space.getNumber() == number) {
                     return space;
@@ -168,7 +194,9 @@ public class Board {
 
         @SuppressWarnings("unchecked")
         PieceIterator(HashMap<Space, Piece> map) {
-            spaceIterator = Arrays.stream(Space.values()).iterator();
+            List<Space> l = Arrays.asList(Space.values());
+            Collections.reverse(l);
+            spaceIterator = l.iterator();
             original = map;
             iteratorMap = (HashMap<Space, Piece>) map.clone();
         }

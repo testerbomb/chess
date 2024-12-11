@@ -1,4 +1,4 @@
-package chess;
+package piece;
 
 import java.util.Set;
 
@@ -8,14 +8,18 @@ public abstract class Piece {
     private boolean moved;
     private Color color;
     private String character;
+    private int weight;
 
-    public Piece(String character, String Color) {
+    public Piece(String character, String Color, int weight) {
         this.character = character;
         moved = false;
         this.color = colorFromString(Color);
+        this.weight = weight;
     }
 
     abstract Set<Space> movableSpaces(int letter, int number);
+
+    abstract Set<Space> attackableSpaces(int letter, int number);
 
     public void setMoved() {
         this.moved = true;
@@ -31,6 +35,10 @@ public abstract class Piece {
 
     public String toString() {
         return character;
+    }
+
+    public int getWeight() {
+        return weight;
     }
 
     protected static Color colorFromString(String colorName) {

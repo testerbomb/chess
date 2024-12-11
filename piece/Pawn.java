@@ -5,10 +5,13 @@ import java.util.Set;
 
 import chess.Board.Space;
 
+/*
+ * the pawn chess peice.
+ */
 public class Pawn extends Piece {
 
     public Pawn(String colorName) {
-        super(Piece.colorFromString(colorName).equals(Color.WHITE) ? "♙" : "♟", colorName, 1);
+        super(Piece.colorFromString(colorName).isWhite ? "♙" : "♟", colorName, 1);
     }
 
     @Override

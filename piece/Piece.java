@@ -4,6 +4,9 @@ import java.util.Set;
 
 import chess.Board.Space;
 
+/**
+ * The parent class of all pieces.
+ */
 public abstract class Piece {
     private boolean moved;
     private Color color;
@@ -17,8 +20,22 @@ public abstract class Piece {
         this.weight = weight;
     }
 
+    /**
+     * returns a set containg all movable spaces.
+     * 
+     * @param letter
+     * @param number
+     * @return
+     */
     abstract Set<Space> movableSpaces(int letter, int number);
 
+    /**
+     * returns a set containg all attackable spaces
+     * 
+     * @param letter
+     * @param number
+     * @return
+     */
     abstract Set<Space> attackableSpaces(int letter, int number);
 
     public void setMoved() {
@@ -41,6 +58,12 @@ public abstract class Piece {
         return weight;
     }
 
+    /**
+     * retruns Color from the string name
+     * 
+     * @param colorName
+     * @return
+     */
     protected static Color colorFromString(String colorName) {
         switch (colorName) {
             case "White":
@@ -52,6 +75,9 @@ public abstract class Piece {
         }
     }
 
+    /**
+     * defines color in an easy to read way.
+     */
     public enum Color {
         WHITE("White", true),
         BLACK("Black", false);

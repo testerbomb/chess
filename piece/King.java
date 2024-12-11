@@ -5,10 +5,13 @@ import java.util.Set;
 
 import chess.Board.Space;
 
+/**
+ * The King piece.
+ */
 public class King extends Piece {
 
     public King(String colorName) {
-        super((Piece.colorFromString(colorName).equals(Piece.Color.WHITE) ? "♔" : "♚"), colorName, Integer.MAX_VALUE);
+        super((Piece.colorFromString(colorName).isWhite ? "♔" : "♚"), colorName, Integer.MAX_VALUE);
     }
 
     @Override

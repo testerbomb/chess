@@ -56,4 +56,14 @@ public class King extends Piece {
         return movableSpaces(letter, number);
     }
 
+    @Override
+    public Piece clone() {
+        Pawn result = new Pawn(this.getColor().colorName);
+        if (this.moved()) {
+            result.setMoved();
+        }
+        return result;
+
+    }
+
 }

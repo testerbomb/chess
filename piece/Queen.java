@@ -99,4 +99,13 @@ public class Queen extends Piece {
         return movableSpaces(letter, number);
     }
 
+    @Override
+    public Piece clone() {
+        Queen result = new Queen(this.getColor().colorName);
+        if (this.moved()) {
+            result.setMoved();
+        }
+        return result;
+    }
+
 }

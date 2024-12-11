@@ -45,4 +45,13 @@ public class Rook extends Piece {
         return movableSpaces(letter, number);
     }
 
+    @Override
+    public Piece clone() {
+        Rook result = new Rook(this.getColor().colorName);
+        if (this.moved()) {
+            result.setMoved();
+        }
+        return result;
+    }
+
 }

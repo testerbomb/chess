@@ -7,16 +7,19 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 import piece.Bishop;
 import piece.King;
+import piece.Knight;
 import piece.Pawn;
 import piece.Piece;
 import piece.Queen;
 import piece.Rook;
+import piece.Piece.Color;
 
 /**
  * Chess Board Class defining a chess board as a 8x8 board each space only knows
@@ -25,10 +28,35 @@ import piece.Rook;
  * @author Timothy Stout
  */
 public class Board {
-  HashMap<Space, Piece> map;
+  protected HashMap<Space, Piece> map;
+  protected HashSet<Piece> whites;
+  protected HashSet<Piece> blacks;
 
-  Board() {
+  public Board(Board other) {
     map = new HashMap<>();
+    whites = new HashSet<>();
+    blacks = new HashSet<>();
+
+    Iterator<Piece> pIterator = other.boardIterator();
+    List<Space> l = Arrays.asList(Space.values());
+    Collections.reverse(l);
+    for (int i = 0; i < 64; i++) {
+      Piece curr = pIterator.next();
+      if (curr != null) {
+        map.put(l.get(i), curr.clone());
+        if (curr.getColor() == Color.WHITE) {
+          whites.add(curr);
+        } else {
+          blacks.add(curr);
+        }
+      }
+    }
+  }
+
+  public Board() {
+    map = new HashMap<>();
+    whites = new HashSet<>();
+    blacks = new HashSet<>();
     map.put(Space.E1, new King("White"));
     map.put(Space.D1, new Queen("White"));
     map.put(Space.E8, new King("Black"));
@@ -42,6 +70,12 @@ public class Board {
     map.put(Space.F2, new Pawn("White"));
     map.put(Space.G2, new Pawn("White"));
     map.put(Space.H2, new Pawn("White"));
+
+    map.put(Space.B1, new Knight("White"));
+    map.put(Space.G1, new Knight("White"));
+
+    map.put(Space.B8, new Knight("Black"));
+    map.put(Space.G8, new Knight("Black"));
 
     map.put(Space.A7, new Pawn("Black"));
     map.put(Space.B7, new Pawn("Black"));
@@ -63,6 +97,43 @@ public class Board {
 
     map.put(Space.C8, new Bishop("Black"));
     map.put(Space.F8, new Bishop("Black"));
+    fillSets();
+  }
+
+  private void fillSets() {
+    whites.add(map.get(Space.A1));
+    whites.add(map.get(Space.B1));
+    whites.add(map.get(Space.C1));
+    whites.add(map.get(Space.D1));
+    whites.add(map.get(Space.E1));
+    whites.add(map.get(Space.F1));
+    whites.add(map.get(Space.G1));
+    whites.add(map.get(Space.H1));
+    whites.add(map.get(Space.A2));
+    whites.add(map.get(Space.B2));
+    whites.add(map.get(Space.C2));
+    whites.add(map.get(Space.D2));
+    whites.add(map.get(Space.E2));
+    whites.add(map.get(Space.F2));
+    whites.add(map.get(Space.G2));
+    whites.add(map.get(Space.H2));
+
+    blacks.add(map.get(Space.A8));
+    blacks.add(map.get(Space.B8));
+    blacks.add(map.get(Space.C8));
+    blacks.add(map.get(Space.D8));
+    blacks.add(map.get(Space.E8));
+    blacks.add(map.get(Space.F8));
+    blacks.add(map.get(Space.G8));
+    blacks.add(map.get(Space.H8));
+    blacks.add(map.get(Space.A7));
+    blacks.add(map.get(Space.B7));
+    blacks.add(map.get(Space.C7));
+    blacks.add(map.get(Space.D7));
+    blacks.add(map.get(Space.E7));
+    blacks.add(map.get(Space.F7));
+    blacks.add(map.get(Space.G7));
+    blacks.add(map.get(Space.H7));
   }
 
   /**
@@ -119,6 +190,13 @@ public class Board {
       o.print("----".repeat(8) + "-\n");
     }
 
+  }
+
+  /**
+   * iterates through all spaces returning null for an empty space.
+   */
+  public Iterator<Piece> boardIterator() {
+    return new PieceIterator(map);
   }
 
   /**

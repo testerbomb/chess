@@ -1,3 +1,3 @@
 {
-  "java.checkstyle.configuration": "/Users/timothystout/College/CS240/CS240_F24/.vscode/eclipse-java-google-style.xml"
+  "java.checkstyle.configuration": "${workspaceFolder}/.vscode/eclipse-java-google-style.xml"
 }

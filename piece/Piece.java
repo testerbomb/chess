@@ -75,6 +75,8 @@ public abstract class Piece {
         }
     }
 
+    public abstract Piece clone();
+
     /**
      * defines color in an easy to read way.
      */

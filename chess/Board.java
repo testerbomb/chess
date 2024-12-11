@@ -20,29 +20,47 @@ public class Board {
 
     Board() {
         map = new HashMap<>();
+        map.put(Space.E1, new King("White"));
+        map.put(Space.E8, new King("Black"));
+    }
+
+    /**
+     * move is capture if it the map contains the key(empty spaces are not
+     * contained.
+     */
+    public boolean moveIsCapture(Space s) {
+        return map.containsKey(s);
+    }
+
+    public static boolean spaceInBoard(Space s) {
+        return spaceInBoard(s.getLetter(), s.getNumber());
+    }
+
+    public static boolean spaceInBoard(int letter, int number) {
+        return ((letter >= 0 && letter < 8) && (number >= 0 && number < 8));
     }
 
     public void dumpBoardState(PrintStream o) {
         Iterator<Piece> pIterator = new PieceIterator(map);
         LocalDateTime now = LocalDateTime.now();
         o.printf("%s\n", now.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-        o.print("---".repeat(8) + "\n");
+        o.print("---".repeat(7) + "-\n");
         for (int i = 0; i < 64; i++) {
             Piece currPiece = pIterator.next();
             if (currPiece == null) {
-                o.print("| |");
+                o.print("|  ");
             } else {
-                o.printf("|%s|", currPiece.toString());
+                o.printf("|%s ", currPiece.toString());
             }
             if ((i + 1) % 8 == 0) {
-                o.print("\n");
+                o.print("\n" + "---".repeat(7) + "-\n");
             }
 
         }
-        o.print("---".repeat(8) + "\n");
+
     }
 
-    private enum Space {
+    public enum Space {
         A1(0, 0),
         B1(1, 0),
         C1(2, 0),

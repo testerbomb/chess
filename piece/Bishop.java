@@ -1,7 +1,7 @@
 package piece;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+
 
 import chess.Board.Space;
 
@@ -15,8 +15,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    Set<Space> movableSpaces(int letter, int number) {
-        HashSet<Space> result = new HashSet<>();
+    public ArrayList<Space> movableSpaces(int letter, int number) {
+        ArrayList<Space> result = new ArrayList<Space>();
 
         // North west
         for (int i = letter - 1, j = number + 1; (i < 8) && (j < 8); i--, j++) {
@@ -46,7 +46,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    Set<Space> attackableSpaces(int letter, int number) {
+    public ArrayList<Space> attackableSpaces(int letter, int number) {
         return movableSpaces(letter, number);
     }
 

@@ -1,7 +1,7 @@
 package piece;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+
 
 import chess.Board.Space;
 
@@ -15,10 +15,11 @@ public class Rook extends Piece {
     }
 
     @Override
-    Set<Space> movableSpaces(int letter, int number) {
-        HashSet<Space> result = new HashSet<>();
+    public ArrayList<Space> movableSpaces(int letter, int number) {
+        ArrayList<Space> result = new ArrayList<Space>();
         // north
         for (int i = letter, j = number + 1; j < 8; j++) {
+
             result.add(chess.Board.Space.getSpace(i, j));
         }
 
@@ -41,7 +42,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    Set<Space> attackableSpaces(int letter, int number) {
+    public ArrayList<Space> attackableSpaces(int letter, int number) {
         return movableSpaces(letter, number);
     }
 

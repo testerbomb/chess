@@ -1,6 +1,7 @@
 package piece;
 
-import java.util.Set;
+import java.util.ArrayList;
+
 
 import chess.Board.Space;
 
@@ -27,7 +28,7 @@ public abstract class Piece {
      * @param number
      * @return
      */
-    abstract Set<Space> movableSpaces(int letter, int number);
+    public abstract ArrayList<Space> movableSpaces(int letter, int number);
 
     /**
      * returns a set containg all attackable spaces
@@ -36,7 +37,7 @@ public abstract class Piece {
      * @param number
      * @return
      */
-    abstract Set<Space> attackableSpaces(int letter, int number);
+     public abstract ArrayList<Space> attackableSpaces(int letter, int number);
 
     public void setMoved() {
         this.moved = true;

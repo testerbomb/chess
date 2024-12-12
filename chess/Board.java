@@ -3,6 +3,7 @@ package chess;
 import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
@@ -11,6 +12,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import piece.Bishop;
 import piece.King;
@@ -138,7 +140,7 @@ public class Board {
 
   /**
    * move is capture if it the map contains the key(empty spaces are not
-   * contained.
+   * contained).
    */
   public boolean moveIsCapture(Space s) {
     return map.containsKey(s);
@@ -188,8 +190,9 @@ public class Board {
       }
       o.print(line + "\n");
       o.print("----".repeat(8) + "-\n");
-    }
 
+    }
+    o.println(this.whites.toString() + "\n" + this.blacks.toString());
   }
 
   /**
@@ -197,6 +200,49 @@ public class Board {
    */
   public Iterator<Piece> boardIterator() {
     return new PieceIterator(map);
+  }
+
+  /**
+   * will return true if move is valid and completed false for any other reason
+   * 
+   * @param from the location of the piece to move
+   * @param to
+   * @return
+   */
+  public boolean whiteTurn(Space from, Space to) {
+
+    if (!map.containsKey(from)) {
+      return false;
+    }
+    Piece curr = map.get(from);
+
+    if (curr.getColor() == Color.BLACK) {
+      return false;
+    }
+
+    ArrayList<Space> availableMoves = curr.movableSpaces(from.letter, from.number);
+    // System.out.println(availableMoves);
+
+    if (!availableMoves.contains(to)) {
+
+      return false;
+    }
+    if (curr instanceof Knight) {
+      if (map.containsKey(to)) {
+        Piece opp = map.get(to);
+        if (opp.getColor() == Color.WHITE) {
+          return false;
+        }
+
+        blacks.remove(opp);
+
+      }
+      map.remove(from);
+      map.put(to, curr);
+      return true;
+    }
+    return false;
+
   }
 
   /**

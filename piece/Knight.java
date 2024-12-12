@@ -1,7 +1,6 @@
 package piece;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 import chess.Board.Space;
 
@@ -15,53 +14,53 @@ public class Knight extends Piece {
     }
 
     @Override
-    Set<Space> movableSpaces(int letter, int number) {
-        HashSet<Space> result = new HashSet<>();
+    public ArrayList<Space> movableSpaces(int letter, int number) {
+        ArrayList<Space> result = new ArrayList<Space>();
 
         // north west
 
-        if ((letter + 2) > 8 && (number - 1) >= 0) {
+        if ((letter + 2) < 8 && (number - 1) >= 0) {
             result.add(chess.Board.Space.getSpace(letter + 2, number - 1));
         }
 
-        if ((letter + 1) > 8 && (number - 2) >= 0) {
+        if ((letter + 1) < 8 && (number - 2) >= 0) {
             result.add(chess.Board.Space.getSpace(letter + 1, number - 2));
         }
 
         // south west
 
-        if ((letter - 2) > 8 && (number - 1) >= 0) {
+        if ((letter - 2) >= 0 && (number - 1) >= 0) {
             result.add(chess.Board.Space.getSpace(letter - 2, number - 1));
         }
 
-        if ((letter - 1) > 8 && (number - 2) >= 0) {
+        if ((letter - 1) >= 0 && (number - 2) >= 0) {
             result.add(chess.Board.Space.getSpace(letter - 1, number - 2));
         }
 
         // north east
 
-        if ((letter + 2) > 8 && (number + 1) >= 0) {
+        if ((letter + 2) < 8 && (number + 1) < 8) {
             result.add(chess.Board.Space.getSpace(letter + 2, number + 1));
         }
 
-        if ((letter + 1) > 8 && (number + 2) >= 0) {
+        if ((letter + 1) < 8 && (number + 2) < 8) {
             result.add(chess.Board.Space.getSpace(letter + 1, number + 2));
         }
 
         // south east
 
-        if ((letter - 2) > 8 && (number + 1) >= 0) {
+        if ((letter - 2) >= 0 && (number + 1) < 8) {
             result.add(chess.Board.Space.getSpace(letter - 2, number + 1));
         }
 
-        if ((letter - 1) > 8 && (number + 2) >= 0) {
+        if ((letter - 1) >= 0 && (number + 2) < 8) {
             result.add(chess.Board.Space.getSpace(letter - 1, number + 2));
         }
         return result;
     }
 
     @Override
-    Set<Space> attackableSpaces(int letter, int number) {
+    public ArrayList<Space> attackableSpaces(int letter, int number) {
         return movableSpaces(letter, number);
     }
 

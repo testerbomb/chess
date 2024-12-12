@@ -1,7 +1,6 @@
 package piece;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
 
 import chess.Board.Space;
 
@@ -15,8 +14,8 @@ public class King extends Piece {
     }
 
     @Override
-    Set<Space> movableSpaces(int currLetter, int currnumber) {
-        HashSet<Space> result = new HashSet<>();
+    public ArrayList<Space> movableSpaces(int currLetter, int currnumber) {
+        ArrayList<Space> result = new ArrayList<Space>();
 
         if (chess.Board.spaceInBoard(currLetter - 1, currnumber + 1)) {
             result.add(chess.Board.Space.getSpace(currLetter - 1, currnumber + 1));
@@ -52,7 +51,7 @@ public class King extends Piece {
     }
 
     @Override
-    Set<Space> attackableSpaces(int letter, int number) {
+    public ArrayList<Space> attackableSpaces(int letter, int number) {
         return movableSpaces(letter, number);
     }
 

@@ -2,7 +2,6 @@ package piece;
 
 import java.util.ArrayList;
 
-
 import chess.Board.Space;
 
 /**
@@ -18,7 +17,7 @@ public class Rook extends Piece {
     public ArrayList<Space> movableSpaces(int letter, int number) {
         ArrayList<Space> result = new ArrayList<Space>();
         // north
-        for (int i = letter, j = number + 1; j < 8; j++) {
+        for (int i = letter, j = number + 1; j < 7; j++) {
 
             result.add(chess.Board.Space.getSpace(i, j));
         }
@@ -34,7 +33,7 @@ public class Rook extends Piece {
             result.add(chess.Board.Space.getSpace(i, j));
         }
         // west
-        for (int i = letter + 1, j = number; i >= 0; i++) {
+        for (int i = letter + 1, j = number; i < 7; i++) {
             result.add(chess.Board.Space.getSpace(i, j));
         }
 

@@ -2,7 +2,6 @@ package piece;
 
 import java.util.ArrayList;
 
-
 import chess.Board.Space;
 
 /**
@@ -19,7 +18,7 @@ public class Bishop extends Piece {
         ArrayList<Space> result = new ArrayList<Space>();
 
         // North west
-        for (int i = letter - 1, j = number + 1; (i < 8) && (j < 8); i--, j++) {
+        for (int i = letter - 1, j = number + 1; (i >= 0) && (j < 8); i--, j++) {
             result.add(chess.Board.Space.getSpace(i, j));
         }
 
@@ -31,13 +30,13 @@ public class Bishop extends Piece {
 
         // south east
 
-        for (int i = letter + 1, j = number - 1; (i < 8) && (j < 8); i++, j--) {
+        for (int i = letter + 1, j = number - 1; (i < 8) && (j >= 0); i++, j--) {
             result.add(chess.Board.Space.getSpace(i, j));
         }
 
         // south west
 
-        for (int i = letter - 1, j = number - 1; (i < 8) && (j < 8); i--, j--) {
+        for (int i = letter - 1, j = number - 1; (i >= 0) && (j >= 0); i--, j--) {
             result.add(chess.Board.Space.getSpace(i, j));
         }
 

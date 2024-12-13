@@ -222,15 +222,18 @@ public class Board {
     }
 
     ArrayList<Space> availableMoves = curr.movableSpaces(from.letter, from.number);
+    ArrayList<Space> attackable = curr.attackableSpaces(from.letter, from.number);
+    Piece opp = map.get(to);
+    boolean occupied = map.containsKey(to);
     // System.out.println(availableMoves);
 
-    if (!availableMoves.contains(to)) {
+    if (!availableMoves.contains(to) && !attackable.contains(to)) {
 
       return false;
     }
     if (curr instanceof Knight) {
-      if (map.containsKey(to)) {
-        Piece opp = map.get(to);
+      if (occupied) {
+
         if (opp.getColor() == Color.WHITE) {
           return false;
         }
@@ -240,9 +243,58 @@ public class Board {
       }
       map.remove(from);
       map.put(to, curr);
+      curr.setMoved();
       return true;
     }
-    return false;
+    if (curr instanceof Pawn) {
+      if (attackable.contains(to) && occupied) {
+        if (map.get(to).getColor() == Color.BLACK) {
+          map.remove(from);
+          map.put(to, curr);
+          blacks.remove(opp);
+          curr.setMoved();
+          return true;
+
+        }
+      }
+
+      if (availableMoves.contains(to)) {
+        if (occupied) {
+          return false;
+        }
+
+        map.remove(from);
+        map.put(to, curr);
+        curr.setMoved();
+      }
+
+      return false;
+    }
+    Space currSpace = availableMoves.get(0);
+
+    int i = 0;
+
+    while (to != currSpace) {
+      if (map.containsKey(currSpace)) {
+        return false;
+      }
+      currSpace = availableMoves.get(++i);
+    }
+    if (occupied) {
+      if (opp.getColor() == Color.WHITE) {
+        return false;
+      }
+      map.put(to, curr);
+      map.remove(from);
+      blacks.remove(opp);
+      curr.setMoved();
+      return true;
+
+    }
+    map.put(to, curr);
+    map.remove(from);
+    curr.setMoved();
+    return true;
 
   }
 
@@ -280,7 +332,7 @@ public class Board {
           return space;
         }
       }
-      throw new IllegalArgumentException("Cords not in board");
+      throw new IllegalArgumentException(String.format("Cords not in board Int: %d,  Int %d", letter, number));
     }
 
     private int getLetter() {

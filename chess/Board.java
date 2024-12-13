@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import piece.Bishop;
 import piece.King;
@@ -175,6 +174,8 @@ public class Board {
   public void dumpBoardState(PrintStream o) {
     Iterator<Piece> pIterator = new PieceIterator(map);
     LocalDateTime now = LocalDateTime.now();
+    List<Space> l = Arrays.asList(Space.values());
+    Collections.reverse(l);
     o.printf("%s\n", now.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
     o.print("----".repeat(8) + "-\n");
     for (int i = 0; i < 8; i++) {
@@ -182,7 +183,7 @@ public class Board {
       for (int j = 0; j < 8; j++) {
         Piece curr = pIterator.next();
         if (curr == null) {
-          line = "|   " + line;
+          line = String.format("|%s ", l.get((i * 8) + j)) + line;
         } else {
           line = String.format("| %s ", curr.toString()) + line;
         }
